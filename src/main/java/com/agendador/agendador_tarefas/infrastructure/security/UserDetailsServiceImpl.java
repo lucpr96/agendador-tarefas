@@ -3,8 +3,6 @@ package com.agendador.agendador_tarefas.infrastructure.security;
 
 import com.agendador.agendador_tarefas.business.dto.UsuarioDTO;
 import com.agendador.agendador_tarefas.infrastructure.client.UsuarioClient;
-import com.java.projeto_usuario.infrastructure.entity.Usuario;
-import com.java.projeto_usuario.infrastructure.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

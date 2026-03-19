@@ -15,8 +15,4 @@ public interface UsuarioClient {
                                     @RequestHeader("Authorization") String token);
 }
 
-// Traz o metodo GET de busca por email para que seja possivel fazer a busca do token do usuario via email
-// Interface não precisa da declaracao de metodo public ou private
-// Ao deixar apenas o UsuarioDTO significa deixar apenas o retorno do metodo que sera criado dentro da pasta cliente
-// Para fazer a busca por email é necessário inserir a Requisição de Parametros e Requisição Header com Authorization para o token
-//
+
