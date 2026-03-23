@@ -10,23 +10,40 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class TarefasService {
 
-    private final TarefasRepository tarefaRepository;
-    private final TarefasConverter tarefaConverter;
+    private final TarefasRepository tarefasRepository;
+    private final TarefasConverter tarefasConverter;
     private final JwtUtil jwtUtil;
 
+
+    // Metodo de gravar uma Tarefa
     public TarefasDTO gravarTarefa(String token, TarefasDTO dto) {
         String email = jwtUtil.extractUserEmail(token.substring(7));
 
         dto.setDataCriacao(LocalDateTime.now());
         dto.setStatusNotificacaoEnum(StatusNotificacaoEnum.PENDENTE);
         dto.setEmailUsuario(email);
-        TarefasEntity entity = tarefaConverter.paraTarefasEntity(dto);
+        TarefasEntity entity = tarefasConverter.paraTarefasEntity(dto);
 
-        return tarefaConverter.paraTarefasDTO(tarefaRepository.save(entity));
+        return tarefasConverter.paraTarefasDTO(tarefasRepository.save(entity));
+    }
+
+
+    // Metodo de buscar tarefas realizadas em determinado periodo de tempo
+    public List<TarefasDTO> buscaTarefasAgendadasPorPeriodo(LocalDateTime dataInicial, LocalDateTime dataFinal) {
+        return tarefasConverter.paraListTarefasDTO(tarefasRepository.findByDataEventoBetween(dataInicial, dataFinal));
+    }
+
+
+    // Metodo de buscar tarefas por email do usuario:
+    public List<TarefasDTO> buscaTarefasPorEmail(String token) {
+        String email = jwtUtil.extractUserEmail(token.substring(7));
+        return tarefasConverter.paraListTarefasDTO(tarefasRepository.findByEmailUsuario(email));
+
     }
 }
